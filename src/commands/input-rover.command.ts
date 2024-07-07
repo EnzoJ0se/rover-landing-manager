@@ -56,9 +56,9 @@ export async function inputRoverCommand(): Promise<RoverInput[]> {
     do {
         inputs.push(await askRoverInput());
 
-        const shouldDeployAnotherRover = await input({ message: "\nDo you want to deploy another rover? (Y/N)" });
+        const shouldLandAnotherRover = await input({ message: "\nDo you want to land another rover? (Y/N)" });
 
-        exit = shouldDeployAnotherRover.toUpperCase() !== "Y";
+        exit = shouldLandAnotherRover.toUpperCase() !== "Y";
     } while (!exit);
 
     return inputs;
