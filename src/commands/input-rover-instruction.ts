@@ -1,20 +1,20 @@
 import { input } from "@inquirer/prompts";
 
-export async function inputRoverInstruction(): Promise<string> {
-	let instruction: string = await input({ message: "Inform the rover instruction: " });
-	instruction = instruction.trim().toUpperCase();
+function validateInstructionsInput(instructions: string): boolean {
+    const regex = /^[LRM]+$/;
 
-	if (!validateInstructionsInput(instruction)) {
-		console.log("\nInvalid instructions. Please inform the instructions using the letters 'L', 'R' and 'M'.");
-
-		return inputRoverInstruction();
-	}
-
-	return instruction;
+    return regex.test(instructions);
 }
 
-function validateInstructionsInput(instructions: string): boolean {
-	const regex = /^[LRM]+$/;
+export async function inputRoverInstruction(): Promise<string> {
+    let instruction: string = await input({ message: "Inform the rover instruction: " });
+    instruction = instruction.trim().toUpperCase();
 
-	return regex.test(instructions);
+    if (!validateInstructionsInput(instruction)) {
+        console.log("\nInvalid instructions. Please inform the instructions using the letters 'L', 'R' and 'M'.");
+
+        return inputRoverInstruction();
+    }
+
+    return instruction;
 }

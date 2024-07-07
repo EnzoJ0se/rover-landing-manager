@@ -14,48 +14,48 @@ const roverService: RoverService = new RoverService();
 const plateauService: PlateauService = new PlateauService();
 
 async function main() {
-	let exit: boolean = false;
-	let plateau: Plateau = null;
+    let exit: boolean = false;
+    let plateau: Plateau = null;
 
-	do {
-		plateau = plateauService.create(await inputPlateauCoordinates());
-	} while (!plateau);
+    do {
+        plateau = plateauService.create(await inputPlateauCoordinates());
+    } while (!plateau);
 
-	do {
-		const answer = await select({
-			message: 'Choose an Option',
-			choices: [
-				{
-					name: '1. Land Rover',
-					value: async () => {
-						const roverData: RoverInput[] = await inputRoverCommand();
-						const roverMovements: RoverMovementEvent[] = roverService.create(roverData);
+    do {
+        const answer = await select({
+            message: 'Choose an Option',
+            choices: [
+                {
+                    name: '1. Land Rover',
+                    value: async () => {
+                        const roverData: RoverInput[] = await inputRoverCommand();
+                        const roverMovements: RoverMovementEvent[] = roverService.create(roverData);
 
-						plateauService.syncRovers(roverMovements);
-					},
-				},
-				{
-					name: '2. Move Rover',
-					value: async () => {
-						const rover: Rover = await selectRover(plateau);
+                        plateauService.syncRovers(roverMovements);
+                    },
+                },
+                {
+                    name: '2. Move Rover',
+                    value: async () => {
+                        const rover: Rover = await selectRover(plateau);
 
-						if (rover) {
-							const instructions: string = await inputRoverInstruction();
-							plateauService.syncRovers([{ rover, instructions }]);
-						}
-					},
-				},
-				{
-					name: '3. Exit',
-					value: async () => {
-						exit = true;
-					},
-				},
-			],
-		});
+                        if (rover) {
+                            const instructions: string = await inputRoverInstruction();
+                            plateauService.syncRovers([{ rover, instructions }]);
+                        }
+                    },
+                },
+                {
+                    name: '3. Exit',
+                    value: async () => {
+                        exit = true;
+                    },
+                },
+            ],
+        });
 
-		await answer();
-	} while (!exit);
+        await answer();
+    } while (!exit);
 }
 
 main();
