@@ -35,7 +35,7 @@ async function main() {
                     },
                 },
                 {
-                    name: '2. Move Rover',
+                    name: '2. Send New Instructions',
                     value: async () => {
                         const rover: Rover = await selectRover(plateau);
 
